@@ -1,4 +1,4 @@
-# Capstone
+# Concurrency Simulations
 
 An interactive tool for visualization of classic concurrency problems
 
