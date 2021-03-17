@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-root router-outlet + * {
+    display: block;
+    height: 100%;
+}
+
+.mat-tab-body-wrapper {
+    height: 100%;
+}
+
+#svg-container {
+    flex: 1 1 auto;
+}
+#svg-container > svg {
+    flex: 1 1 auto;
+    height: 0;
+    margin: 20px;
+}

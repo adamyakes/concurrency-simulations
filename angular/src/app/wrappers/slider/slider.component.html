@@ -1,0 +1,19 @@
+<div>
+    <div class="label-container">
+        <div [matTooltip]="tooltip" class="center-vertical">
+            <ng-content></ng-content>
+        </div>
+        <span class="fill-space"></span>
+        <span>
+            <button mat-icon-button [disabled]="disabled || value <= min" (click)="dec()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <span>{{value}}</span>
+            <button mat-icon-button [disabled]="disabled || value >= max" (click)="inc()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </span>
+    </div>
+    <mat-slider [disabled]="disabled" [min]="min / increment" [max]="max / increment" [value]="value / increment"
+        (input)="updateValue($event.value)"></mat-slider>
+</div>

@@ -1,0 +1,57 @@
+<mat-drawer-container>
+    <mat-drawer #drawer [opened]="true" mode="side">
+        <div class="flex-row pad-med">
+            <span class="status">{{ status }}</span>
+            <span class="fill-space"></span>
+            <button mat-raised-button (click)="goOrCancel()">{{running ? 'Cancel' : 'Go'}}</button>
+        </div>
+        <router-outlet></router-outlet>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-tab-group dynamicHeight mat-align-tabs="start">
+            <mat-tab label="Current Run">
+                <div id="current-run-container">
+                    <div id="controls-container">
+                        <span class="num-states-fixed-width align-right">{{currentStatePos}}</span><span>/</span><span
+                            class="num-states-fixed-width">{{states}}</span>
+                        <button [disabled]="currentStatePos <= 0" mat-icon-button (click)="back()">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                        </button>
+                        <button mat-icon-button [disabled]="currentStatePos >= states" (click)="playPause()">
+                            <mat-icon *ngIf="!playing">play_arrow</mat-icon>
+                            <mat-icon *ngIf="playing">pause</mat-icon>
+                        </button>
+                        <button mat-icon-button [disabled]="currentStatePos >= states" (click)="forward()">
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                        </button>
+                        <mat-slider [disabled]="!states" [min]="0" [max]="states || 1" [value]="currentStatePos"
+                            (input)="this.currentStatePos = $event.value" (change)="moveToState($event.value)">
+                        </mat-slider>
+                        <mat-form-field [style.fontSize.px]="14" appearance="fill" class="option-narrow">
+                            <mat-label>Playback Speed</mat-label>
+                            <mat-select [(value)]="speed">
+                                <mat-option [value]="500">Slow</mat-option>
+                                <mat-option [value]="250">Medium</mat-option>
+                                <mat-option [value]="100">Fast</mat-option>
+                                <mat-option [value]="60">Extra Fast</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div id="svg-container" #svgContainer></div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Past Runs">
+                <mat-card *ngIf="!runs || !runs.length">
+                    <mat-card-title> No saved runs for this save code </mat-card-title>
+                    <mat-card-content>Start a new run or change save codes to view run data.</mat-card-content>
+                </mat-card>
+                <div class="past-runs-container" [ngSwitch]="selectedProblem">
+                    <app-dp-stats [runs]="runs" *ngSwitchCase="problems.DiningPhilosophers"></app-dp-stats>
+                    <app-readwrite-past-runs [runs]="runs" *ngSwitchCase="problems.ReadWrite"></app-readwrite-past-runs>
+                    <app-buffer-past-runs [runs]="runs" *ngSwitchCase="problems.BoundedBuffer"></app-buffer-past-runs>
+                    <app-unisex-past-runs [runs]="runs" *ngSwitchCase="problems.UnisexBathroom"></app-unisex-past-runs>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-drawer-content>
+</mat-drawer-container>

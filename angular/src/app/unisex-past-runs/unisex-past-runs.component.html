@@ -1,0 +1,56 @@
+<mat-card *ngFor="let run of runs" class="run-container">
+    <mat-card-header>
+        <mat-card-title>
+            Duration: {{run.options.duration | nanoDuration }}, Males:
+            {{run.options.numMales}}, Females: {{run.options.numFemales}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Male time: {{run.options.maleTime | nanoDuration}} ± {{run.options.variation | nanoDuration}},
+            Female time: {{run.options.femaleTime | nanoDuration}} ± {{run.options.variation | nanoDuration}}
+            Sleep time: {{run.options.restartTime | nanoDuration}} ± {{run.options.variation | nanoDuration}}
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Kind</th>
+                    <th rowspan="2">Cycles</th>
+                    <th colspan="4">Time Waiting</th>
+                    <th colspan="4">Time Working</th>
+                </tr>
+                <tr>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let unisexStat of run.statsList">
+                <td>{{unisexStat.id < run.options.numMales ? 'Male' : 'Female' }}</td>
+                <td>{{unisexStat.timesUsed}}</td>
+                <td>{{unisexStat.waitTimeMin | nanoDuration }}</td>
+                <td>{{unisexStat.waitTimeMax | nanoDuration }}</td>
+                <td>{{unisexStat.waitTimeTotal| nanoDuration }}</td>
+                <td>{{unisexStat.timesUsed > 0 ? (unisexStat.waitTimeTotal / unisexStat.timesUsed | nanoDuration) :
+                    'N/A'}}
+                </td>
+                <td>{{unisexStat.timeUsingMin | nanoDuration }}</td>
+                <td>{{unisexStat.timeUsingMax | nanoDuration }}</td>
+                <td>{{unisexStat.timeUsingTotal | nanoDuration }}</td>
+                <td>{{unisexStat.timesUsed > 0 ? (unisexStat.timeUsingTotal / unisexStat.timesUsed | nanoDuration) :
+                    'N/A'
+                    }}</td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                <td>{{aggregate(run, 'timesUsed')}}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>

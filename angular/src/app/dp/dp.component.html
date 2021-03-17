@@ -1,0 +1,28 @@
+<div class="options-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Solution</mat-label>
+        <mat-select [disabled]="stream" [(value)]="solution">
+            <mat-option [value]="0">Non-Solution</mat-option>
+            <mat-option [value]="1">Footman</mat-option>
+            <mat-option [value]="2">Lefty</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <app-slider [disabled]="stream" (valueChange)="setNumPhilosophers($event)" [value]="numPhilosophers" min="2"
+        max="20" increment="1">Number of Philosophers</app-slider>
+    <app-slider [disabled]="stream" [(value)]="duration" min="1" max="30" increment="1">Duration (s)</app-slider>
+    <div>
+        <div>Units</div>
+        <mat-radio-group [disabled]="stream" [value]="units" (change)="units=$event.value">
+            <mat-radio-button [value]="1000000">ms</mat-radio-button>
+            <mat-radio-button [value]="1000">µs</mat-radio-button>
+            <mat-radio-button [value]="1">ns</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <app-slider [disabled]="stream" [(value)]="timeThinking" min="0" max="1000" increment="10">Time Thinking
+    </app-slider>
+    <app-slider [disabled]="stream" [(value)]="timeEating" min="0" max="1000" increment="10">Time Eating</app-slider>
+    <app-slider tooltip="Use this option to add a random amount of time between zero and this value to other durations."
+        [disabled]="stream" [(value)]="variation" min="0" max="1000" increment="10">
+        Random variation
+    </app-slider>
+</div>

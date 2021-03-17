@@ -1,0 +1,37 @@
+<div class="options-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Solution</mat-label>
+        <mat-select [disabled]="stream" [(value)]="solution">
+            <mat-option [value]="1">First (Starvation)</mat-option>
+            <mat-option [value]="2">No Starvation with Turnstile</mat-option>
+            <mat-option [value]="3">Writer Priority</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <app-slider [disabled]="stream" (valueChange)="setNumReaders($event)" [value]="numReaders" min="1" max="10"
+        increment="1">Number of
+        readers</app-slider>
+    <app-slider [disabled]="stream" (valueChange)="setNumWriters($event)" [value]="numWriters" min="1" max="10"
+        increment="1">Number of
+        writers</app-slider>
+    <app-slider [disabled]="stream" [(value)]="duration" min="1" max="30" increment="1">Duration (s)</app-slider>
+    <div>
+        <div>Units</div>
+        <mat-radio-group [disabled]="stream" [value]="units" (change)="units=$event.value">
+            <mat-radio-button [value]="1000000">ms</mat-radio-button>
+            <mat-radio-button [value]="1000">µs</mat-radio-button>
+            <mat-radio-button [value]="1">ns</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <app-slider [disabled]="stream" [(value)]="readTime" min="0" max="1000" increment="10">Read duration
+    </app-slider>
+    <app-slider [disabled]="stream" [(value)]="writeTime" min="0" max="1000" increment="10">Write duration
+    </app-slider>
+    <app-slider [disabled]="stream" [(value)]="readSleep" min="0" max="1000" increment="10">Read sleep
+    </app-slider>
+    <app-slider [disabled]="stream" [(value)]="writeSleep" min="0" max="1000" increment="10">Write sleep
+    </app-slider>
+    <app-slider tooltip="Use this option to add a random amount of time between zero and this value to other durations."
+        [disabled]="stream" [(value)]="variation" min="0" max="1000" increment="10">
+        Random variation
+    </app-slider>
+</div>

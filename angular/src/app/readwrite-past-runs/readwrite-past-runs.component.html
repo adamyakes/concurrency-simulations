@@ -1,0 +1,57 @@
+<mat-card *ngFor="let run of runs" class="run-container">
+    <mat-card-header>
+        <mat-card-title>
+            Solution: {{getSolutionDescription(run.options.solution)}},
+            Duration: {{run.options.duration | nanoDuration }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Readers:
+            {{run.options.numReaders}}, Writers: {{run.options.numWriters}},
+            Read Duration: {{run.options.readDuration | nanoDuration }} ± {{run.options.variation | nanoDuration}},
+            Write Duration: {{run.options.writeDuration | nanoDuration}} ±
+            {{run.options.variation | nanoDuration}}
+            <br>
+            Read Sleep {{ run.options.readSleep | nanoDuration }} ± {{ run.options.variation | nanoDuration}}
+            Write Sleep {{ run.options.writeSleep | nanoDuration }} ± {{ run.options.variation | nanoDuration }}
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Kind</th>
+                    <th rowspan="2">Cycles</th>
+                    <th colspan="4">Time Waiting</th>
+                    <th colspan="4">Time Working</th>
+                </tr>
+                <tr>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let rwStat of run.statsList">
+                <td>{{rwStat.readWriteNumber < run.options.numReaders ? 'Reader' : 'Writer' }}</td>
+                <td>{{rwStat.actions}}</td>
+                <td>{{rwStat.waitTimeMin | nanoDuration }}</td>
+                <td>{{rwStat.waitTimeMax | nanoDuration }}</td>
+                <td>{{rwStat.waitTimeTotal| nanoDuration }}</td>
+                <td>{{rwStat.actions > 0 ? (rwStat.waitTimeTotal / rwStat.actions | nanoDuration) : 'N/A'}}</td>
+                <td>{{rwStat.actionTimeMin | nanoDuration }}</td>
+                <td>{{rwStat.actionTimeMax | nanoDuration }}</td>
+                <td>{{rwStat.actionTimeTotal | nanoDuration }}</td>
+                <td>{{rwStat.actions > 0 ? (rwStat.actionTimeTotal / rwStat.actions | nanoDuration) : 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                <td>{{aggregate(run, 'actions')}}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>

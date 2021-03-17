@@ -1,0 +1,35 @@
+.fill-space {
+    flex: 1 1 auto;
+}  
+
+.rest-of-screen {
+    height: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+#full-height-container {
+    height: 100vh;
+    flex-direction: column;
+    display: flex;
+}
+
+mat-toolbar > * {
+    font-size: 12pt;
+    margin: 0 10px;
+    color: #303030;
+    text-decoration: none;
+}
+
+a.active, mat-toolbar a:hover {
+    text-decoration: underline;
+}
+
+.code-container {
+    font-size: 12pt;
+    display: inline-block;
+}
+
+.id-code {
+    font-family: 'Roboto Mono', monospace;
+}

@@ -1,0 +1,56 @@
+<mat-card *ngFor="let run of runs" class="run-container">
+    <mat-card-header>
+        <mat-card-title>
+            Solution: {{ getSolutionDescription(run.options.choice)}}, Philosophers: {{ run.options.size }}, Deadlocked?
+            {{ run.deadlocked ? 'Yes' : 'No' }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Duration: {{ run.options.duration | nanoDuration }}
+            Eat time: {{run.options.timeEating | nanoDuration}} ± {{run.options.variation | nanoDuration}},
+            Think time: {{run.options.timeThinking | nanoDuration}} ± {{run.options.variation | nanoDuration}}
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">Cycles</th>
+                    <th colspan="4">Time Eating</th>
+                    <th colspan="4">Time Thinking</th>
+                </tr>
+                <tr>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let dpStat of run.statsList">
+                <td>{{dpStat.philosopherNumber + 1}}</td>
+                <td>{{dpStat.cycles}}</td>
+                <td>{{dpStat.minEating | nanoDuration }}</td>
+                <td>{{dpStat.maxEating | nanoDuration }}</td>
+                <td>{{dpStat.totalEating| nanoDuration }}</td>
+                <td>{{dpStat.cycles > 0 ? (dpStat.totalEating / dpStat.cycles | nanoDuration) :
+                    'N/A'}}
+                </td>
+                <td>{{dpStat.maxEating | nanoDuration }}</td>
+                <td>{{dpStat.maxThinking | nanoDuration }}</td>
+                <td>{{dpStat.totalThinking | nanoDuration }}</td>
+                <td>{{dpStat.cycles > 0 ? (dpStat.totalThinking / dpStat.cycles | nanoDuration) :
+                    'N/A'
+                    }}</td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                <td>{{aggregate(run, 'cycles')}}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>

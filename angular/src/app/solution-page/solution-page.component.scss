@@ -1,0 +1,93 @@
+:host {
+    display: flex;
+    height: 100%;
+}
+
+mat-drawer-container {
+    width: 100%;
+    height: 100%;
+}
+
+button + button {
+    margin-left: 15px
+}
+
+.center-vertical {
+    margin: auto 0;
+}
+
+mat-tab-group {
+    width: 100%;
+    height: 100%;
+}
+
+#current-run-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#controls-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#controls-container > * {
+    flex: 0 1 auto;
+    margin: 5px;
+}
+
+.fill-space, #controls-container > .mat-slider-horizontal {
+    flex: 1 1 auto;
+}
+
+#animation-duration-input {
+    width: 200px;
+}
+
+.option-narrow {
+    width: 150px;
+}
+
+.status {
+    font-size: large;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+}
+
+mat-drawer-content {
+    background-color: white;
+}
+
+#svg-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.num-states-fixed-width {
+    width: 50px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.pad-med {
+    padding: 10px;
+}
+
+.past-runs-container {
+    padding: 16px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+mat-card {
+    max-width: 900px;
+    margin: 16px auto;
+}

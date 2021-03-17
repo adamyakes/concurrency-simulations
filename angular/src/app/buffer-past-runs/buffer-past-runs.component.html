@@ -1,0 +1,54 @@
+<mat-card *ngFor="let run of runs" class="run-container">
+    <mat-card-header>
+        <mat-card-title>
+            Duration: {{run.options.duration | nanoDuration }}, Producers:
+            {{run.options.numProducers}}, Consumers: {{run.options.numConsumers}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Produce time: {{run.options.produceTime | nanoDuration}} ± {{run.options.variation | nanoDuration}},
+            Consume time: {{run.options.consumeTime | nanoDuration}} ± {{run.options.variation | nanoDuration}}
+            Sleep time: {{run.options.sleepTime | nanoDuration}} ± {{run.options.variation | nanoDuration}}
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Kind</th>
+                    <th rowspan="2">Cycles</th>
+                    <th colspan="4">Time Waiting</th>
+                    <th colspan="4">Time Working</th>
+                </tr>
+                <tr>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Total</th>
+                    <th>Avg</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let bufferStat of run.statsList">
+                <td>{{bufferStat.bufferStatNum < run.options.numProducers ? 'Producer' : 'Consumer' }}</td>
+                <td>{{bufferStat.actions}}</td>
+                <td>{{bufferStat.waitTimeMin | nanoDuration }}</td>
+                <td>{{bufferStat.waitTimeMax | nanoDuration }}</td>
+                <td>{{bufferStat.waitTimeTotal| nanoDuration }}</td>
+                <td>{{bufferStat.actions > 0 ? (bufferStat.waitTimeTotal / bufferStat.actions | nanoDuration) : 'N/A'}}
+                </td>
+                <td>{{bufferStat.actionTimeMin | nanoDuration }}</td>
+                <td>{{bufferStat.actionTimeMax | nanoDuration }}</td>
+                <td>{{bufferStat.actionTimeTotal | nanoDuration }}</td>
+                <td>{{bufferStat.actions > 0 ? (bufferStat.actionTimeTotal / bufferStat.actions | nanoDuration) : 'N/A'
+                    }}</td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                <td>{{aggregate(run, 'actions')}}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>

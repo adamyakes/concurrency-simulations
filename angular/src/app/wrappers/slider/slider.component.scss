@@ -1,0 +1,15 @@
+.label-container {
+    display: flex;
+}
+
+.label-container > .fill-space { 
+    flex: 1 1 auto;
+}
+
+.center-vertical {
+    margin: auto 0;
+}
+
+.mat-slider-horizontal {
+    width: 250px;
+}

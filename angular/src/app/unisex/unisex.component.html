@@ -1,0 +1,34 @@
+<div class="options-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Solution</mat-label>
+        <mat-select [disabled]="stream" [(value)]="solution">
+            <mat-option [value]="solutions.FIRST">First (Starvation)</mat-option>
+            <mat-option [value]="solutions.NO_STARVE">No Starvation with Turnstile</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <app-slider [disabled]="stream" [value]="numFemales" (valueChange)="setNumFemales($event)" [min]="1" [max]="10"
+        [increment]="1">Number
+        of females</app-slider>
+    <app-slider [disabled]="stream" [value]="numMales" (valueChange)="setNumMales($event)" [min]="1" [max]="10"
+        [increment]="1">Number of
+        males</app-slider>
+    <app-slider [disabled]="stream" [value]="capacity" (valueChange)="setCapacity($event)" [min]="1" [max]="10"
+        [increment]="1">Bathroom
+        Capacity</app-slider>
+    <app-slider [disabled]="stream" [(value)]="duration" [min]="1" [max]="30" [increment]="1">Duration</app-slider>
+    <div>
+        <div>Units</div>
+        <mat-radio-group [disabled]="stream" [value]="units" (change)="units=$event.value">
+            <mat-radio-button [value]="1000000">ms</mat-radio-button>
+            <mat-radio-button [value]="1000">µs</mat-radio-button>
+            <mat-radio-button [value]="1">ns</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <app-slider [disabled]="stream" [(value)]="femaleTime" min="0" max="1000" increment="10">Female time</app-slider>
+    <app-slider [disabled]="stream" [(value)]="maleTime" min="0" max="1000" increment="10">Male time</app-slider>
+    <app-slider [disabled]="stream" [(value)]="resetTime" min="0" max="1000" increment="10">Sleep time</app-slider>
+    <app-slider tooltip="Use this option to add a random amount of time between zero and this value to other durations."
+        [disabled]="stream" [(value)]="variation" min="0" max="1000" increment="10">
+        Random variation
+    </app-slider>
+</div>

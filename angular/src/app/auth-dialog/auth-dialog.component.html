@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Save Code</h1>
+<mat-dialog-content>
+    <p>
+        When you execute the simulations, your runs are saved with a unique
+        code to identify them. You can use this code to return back to a set
+        of saved runs or start fresh.
+    </p>
+    <div class="form-spinner-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Code</mat-label>
+            <input type="text" #codeInput matInput [value]="code" (keyup)="updateCode(codeInput.value)"
+                (blur)="updateCode(codeInput.value)">
+        </mat-form-field>
+        <mat-spinner *ngIf="loading" [diameter]="25"></mat-spinner>
+    </div>
+    <div *ngIf="invalid">Sorry, that code's invalid.</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-dialog-close mat-button>Cancel</button>
+    <button (click)="getNewCode()" mat-button>Get New Code</button>
+    <button (click)="saveCode()" mat-raised-button>Save</button>
+</mat-dialog-actions>

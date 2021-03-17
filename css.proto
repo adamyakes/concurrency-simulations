@@ -1,0 +1,287 @@
+syntax = "proto3";
+
+option go_package = "gitlab.com/adamyakes/capstone/grpc/css";
+
+message DPState {
+	enum State {
+		UNDEFINED = 0;
+		REQUESTING_FORK = 1;
+		HOLDING_FORK = 2;
+		RELEASING_FORK = 3;
+		HUNGRY = 4;
+		EATING = 5;
+		THINKING = 6;
+		GRACEFULLY_EXITED = 7;
+		DEADLOCKED = 8;
+	}
+	int32 id = 1;
+	State state = 2;
+	int32 fork_id = 3;
+	int64 time = 4;
+}
+
+message DPOptions {
+	int32 choice = 1;          // Which solution? 0 = non, 1 = s1, 2 = s2
+	int64 duration = 2;        // Nanoseconds
+	int32 size = 3;            // Number of philosophers
+	int64 time_thinking = 4;
+	int64 time_eating = 5;
+	int64 variation = 6;
+	SaveCode save_code = 7;
+}
+
+message DPRun {
+	int64 timestamp = 1;
+	DPOptions options = 2;
+	bool deadlocked = 3;
+	repeated DPStat stats = 4;
+}
+
+message DPStat {
+	int32 philosopher_number = 1;
+	int64 max_hungry = 2;
+	int64 max_eating = 3;
+	int64 max_thinking = 4;
+	int64 min_hungry = 5;
+	int64 min_eating = 6;
+	int64 min_thinking = 7;
+	int64 total_hungry = 8;
+	int64 total_eating = 9;
+	int64 total_thinking = 10;
+	int32 cycles = 11;
+}
+
+message RWOptions {
+	enum Solution {
+		UNSPECIFIED = 0;
+		FIRST_STARVATION = 1;
+		NO_STARVE_TURNSTILE = 2;
+		WRITER_PRIORITY = 3;
+	}
+	int32 num_readers = 1;
+	int32 num_writers = 2;
+	Solution solution = 3;
+	int64 duration = 4;
+	int64 read_duration = 5;
+	int64 write_duration = 6;
+	int64 variation = 7;
+	int64 read_sleep = 8;
+	int64 write_sleep = 9;
+	SaveCode save_code = 10;
+}
+
+message RWState {
+	enum State {
+		UNDEFINED = 0;
+		READING = 1;
+		WRITING = 2;
+		WAITING_FOR_MUTEX = 3;
+		ACQUIRED_MUTEX = 4;
+		RELEASED_MUTEX = 5;
+		WAITING_FOR_ROOM_EMPTY = 6;
+		RECEIVED_ROOM_EMPTY = 7;
+		SIGNAL_ROOM_EMPTY = 8;
+		WAITING_FOR_TURNSTILE = 9;
+		THROUGH_TURNSTILE = 10;
+		ENTER_READ_SWITCH = 11;
+		LEAVE_READ_SWITCH = 12;
+		ENTER_WRITE_SWITCH = 13;
+		LEAVE_WRITE_SWITCH = 14;
+		WAITING_FOR_NO_READERS = 15;
+		WAITING_FOR_NO_WRITERS = 16;
+		SIGNAL_NO_READERS = 17;
+		SIGNAL_NO_WRITERS = 18;
+		RECEIVED_NO_READERS = 19;
+		RECEIVED_NO_WRITERS = 20;
+		END_ACTION = 21;
+		WAIT_ACTION = 22;
+	}
+	int32 id = 1;
+	int64 time = 2; // Unix time nano
+	State state = 3;
+	string actor = 4;
+}
+
+message RWStats {
+	repeated RWRun rw_runs = 1;
+}
+
+message RWRun {
+	int64 timestamp = 1;
+	RWOptions options = 2;
+	repeated RWRunStat stats = 3;
+}
+
+message DPStats {
+	repeated DPRun dp_runs = 1;
+}
+
+message BufferStats {
+	repeated BufferRun buffer_runs = 1;
+}
+
+message BufferRun {
+	int64 timestamp = 1;
+	BufferOptions options = 2;
+	repeated BufferRunStat stats = 3;
+}
+
+message BufferRunStat {
+	int64 buffer_stat_num = 1;
+	int64 action_time_min = 2;
+	int64 action_time_max = 3;
+	int64 action_time_total = 4;
+	int64 wait_time_min = 5;
+	int64 wait_time_max = 6;
+	int64 wait_time_total = 7;
+	int32 actions = 8;
+	string actor_type = 9;
+}
+
+message RWRunStat {
+	int32 read_write_number = 1;
+	int64 action_time_min = 2;
+	int64 action_time_max = 3;
+	int64 action_time_total = 4;
+	int64 wait_time_min = 5;
+	int64 wait_time_max = 6;
+	int64 wait_time_total = 7;
+	int32 actions = 8;
+	string actor_type = 9;
+}
+
+message BufferOptions {
+	int32 buffer_size = 1;
+	int32 num_producers = 2;
+	int32 num_consumers = 3;
+	int64 produce_time = 4;
+	int64 consume_time = 5;
+	int64 variation = 6;
+	int64 duration = 7;
+	int64 sleep_time = 8;
+	SaveCode save_code = 9;
+}
+
+message BufferState {
+	enum State {
+		UNDEFINED = 0;
+		PRODUCED_ITEM = 1;
+		CONSUMED_ITEM = 2;
+		PRODUCING_ITEM = 3;
+		CONSUMING_ITEM = 4;
+		WAIT_FOR_BUFFER = 5;
+		IDLE = 6;
+	}
+	int32 id = 1;
+	State state = 2;
+	int64 time = 3;
+	string actor = 4;
+}
+
+message ModusOptions {
+	int64 duration = 1;
+	int32 total_heathens = 2;
+	int32 total_prudes = 3;
+	int64 time_to_cross_min = 4;
+	int64 time_to_cross_max = 5;
+}
+
+message ModusState {
+	enum State {
+		UNDEFINED = 0;
+		NEUTRAL = 1;
+		HEATHENS_RULE = 2;
+		PRUDES_RULE = 3;
+		TRANSITION_TO_HEATHENS = 4;
+		TRANSITION_TO_PRUDES = 5;
+		WAITING_TO_CROSS = 6;
+		CROSSING = 7;
+	}
+	int32 id = 1;
+	State state = 2;
+	int64 time = 3;
+}
+
+message UnisexOptions {
+	int64 duration = 1;
+	enum Solution {
+		UNDEFINED = 0;
+		FIRST = 1;
+		NO_STARVE = 2;
+	}
+	Solution solution = 2;
+	int32 num_males = 3;
+	int32 num_females = 4;
+	int32 max_allowed = 5;
+	int64 male_time = 6;
+	int64 female_time = 7;
+	int64 restart_time = 8;
+	int64 variation = 9;
+	SaveCode save_code = 10;
+}
+
+message UnisexState {
+	enum State {
+		UNDEFINED = 0;
+		QUEUING = 1;
+		ENTERING = 2;
+		LEAVING = 3;
+		SIGNAL_EMPTY = 4;
+		MALE_SWITCH_ON = 5;
+		MALE_SWITCH_OFF = 6;
+		FEMALE_SWITCH_ON = 7;
+		FEMALE_SWITCH_OFF = 8;
+	}
+	int32 id = 1;
+	State state = 2;
+	int64 time = 3;
+}
+
+
+message UnisexStats {
+	repeated UnisexRun unisex_runs = 1;
+}
+
+message UnisexRun {
+	int64 timestamp = 1;
+	UnisexOptions options = 2;
+	repeated UnisexRunStat stats = 3;
+}
+
+message UnisexRunStat {
+	int32 id = 1;
+	int64 time_using_min = 2;
+	int64 time_using_max = 3;
+	int64 time_using_total = 5;
+	int64 times_used = 6;
+	int64 wait_time_min = 8;
+	int64 wait_time_max = 9;
+	int64 wait_time_total = 11;
+}
+
+message Empty { }
+
+message SaveCode {
+	string save_code = 1;
+}
+
+message SaveCodeValidationResponse {
+	bool valid = 1;
+}
+
+service CSS {
+	rpc Philosophize(DPOptions) returns (stream DPState);
+	rpc GetDPStats(SaveCode) returns (DPStats);
+
+	rpc ReadWrite(RWOptions) returns (stream RWState);
+	rpc GetRWStats(SaveCode) returns (RWStats);
+
+	rpc BoundedBuffer(BufferOptions) returns (stream BufferState);
+	rpc GetBufferStats(SaveCode) returns (BufferStats);
+
+	rpc Unisex(UnisexOptions) returns (stream UnisexState);
+	rpc GetUnisexStats(SaveCode) returns (UnisexStats);
+
+	rpc NewSaveCode(Empty) returns (SaveCode);
+	rpc ValidateSaveCode(SaveCode) returns (SaveCodeValidationResponse);
+}

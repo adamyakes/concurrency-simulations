@@ -1,0 +1,75 @@
+<h2>Introduction to the simulations</h2>
+
+<p>
+    <a href="https://greenteapress.com/wp/semaphores/" target="_blank" rel="noopener noreferrer"><em>The Little Book of
+            Semaphores</em></a>
+    introduces concurrency techniques by presenting problems in which independent actors must be synchronized.
+    The actors model threads of execution in a program (or, from an operating systems perspective,
+    potentially multiple programs) which must access shared resources. Each problem has a set of
+    constraints to satisfy for a correct solution which requires synchronization.
+</p>
+
+<p>
+    Even with the correct solutions as detailed in <em>The Little Book of Semaphores</em>, it can be
+    difficult to conceptualize the behavior of a program with multiple threads of execution.
+    Stochastic and unexpected behavior mean that it's not always easy or even possible to trace
+    program execution to understand what's going on. The goal of these simulations is to provide
+    a way to visualize these concurrency problems to get a better understanding of them.
+</p>
+
+<p>
+    As soon as you hit "Go", the server begins executing the program. As the threads do work,
+    they communicate their state which gets shown in the form of a visualization, which can be
+    played in live time (even if the server hasn't finished executing). You can
+    play the visualization to see how the solutions work or step through it manually for better
+    detail. After the simulations finish running, a summary record is saved that can be viewed
+    to analyze how changing parameters affects throughput, starvation, or fairness.
+</p>
+
+<h3><a href="https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf#section.4.4" target="blank">Dining
+        Philosophers</a></h3>
+
+<p>
+    In Dining Philosophers, <code>n</code> philosophers are sitting around a round table with
+    <code>n</code> forks between them. Philosophers have two activities: eating and thinking.
+    When philosophers become hungry, they must acquire both forks to either side of themselves,
+    then they eat for a period of time, and finally they replace the forks to the table and
+    return to thinking for a while. There are three solutions to this problem, the first is
+    incorrect and can cause deadlock. The second solves it by use of a footman to ensure at most
+    <code>n - 1</code> philosophers are holding forks at a time. Finally, the third solution breaks
+    circular wait by ensuring at least one philosopher is a lefty and picks up the forks in a
+    different order.
+</p>
+
+<h3><a href="https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf#section.4.2" target="blank">Readers &
+        Writers</a></h3>
+
+<p>
+    In Readers &amp; Writers, a set of <code>n</code> readers and <code>m</code> writers need concurrent
+    access to a datastore. Any number of readers can access the file at once, but at most one writer
+    can access the file to prevent inconsistent state. There are three solutions to this problem. The first
+    is starvation prone as readers can continue to access the file without yielding to writers. The second
+    solves this with a turnstile but with lowered throughput. The third solution can also experience
+    starvation by giving priority to writers, but there are situations where this may be appropriate.
+</p>
+
+<h3><a href="https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf#section.4.1" target="blank">Bounded
+        Buffer</a></h3>
+
+<p>
+    In Bounded Buffer, a set of <code>n</code> producers and <code>m</code> consumers are writing to and
+    reading from a buffer, respectively. The buffer has a fixed size. Producers must wait for a slot
+    in the buffer to become available if the buffer is full and consumers must wait for an item if
+    the buffer is empty. There is one working solution to this problem in which producers and consumers
+    use counting semaphores to ensure there are slots to use before attempting to access the buffer.
+</p>
+
+<h3><a href="https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf#section.6.2" target="blank">Unisex
+        Bathroom</a></h3>
+
+<p>
+    In Unisex Bathroom, a set of <code>n</code> males and <code>m</code> females need concurrent access
+    to a bathroom, however only one sex at a time is permitted to use the bathroom, and only up to a
+    given fixed capacity. There are two solutions to this problem, one of which is starvation prone and
+    the other which uses a turnstile to maintain fairness.
+</p>

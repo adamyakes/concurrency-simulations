@@ -1,0 +1,16 @@
+<div id="full-height-container">
+    <mat-toolbar>
+        <button *ngIf="!router.isActive('/welcome', true)" (click)="navMenuClick()" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a [routerLink]="'welcome'">Concurrency Simulations</a>
+        <span class="fill-space"></span>
+        <a *ngFor="let problem of problems" routerLinkActive="active" [routerLink]="'problem/' + problem.link">{{
+            problem.name }}</a>
+        <button [matTooltip]="'Click to change the save code'" (click)="codeClick()" class="id-code"
+            mat-stroked-button>{{code}}</button>
+    </mat-toolbar>
+    <div class="rest-of-screen">
+        <router-outlet></router-outlet>
+    </div>
+</div>

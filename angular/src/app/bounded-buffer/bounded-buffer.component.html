@@ -1,0 +1,25 @@
+<div class="options-container">
+    <app-slider [disabled]="stream" (valueChange)="setBufferSize($event)" [value]="bufferSize" min="1" max="50"
+        increment="5">Buffer Size</app-slider>
+    <app-slider [disabled]="stream" (valueChange)="setNumProducers($event)" [value]="numProducers" min="1" max="10"
+        increment="1">Number of Producers</app-slider>
+    <app-slider [disabled]="stream" (valueChange)="setNumConsumers($event)" [value]="numConsumers" min="1" max="10"
+        increment="1">Number of Consumers</app-slider>
+    <app-slider [disabled]="stream" [(value)]="duration" min="1" max="30" increment="1">Duration (s)</app-slider>
+    <div>Units</div>
+    <mat-radio-group [disabled]="stream" [value]="units" (change)="units=$event.value">
+        <mat-radio-button [value]="1000000">ms</mat-radio-button>
+        <mat-radio-button [value]="1000">µs</mat-radio-button>
+        <mat-radio-button [value]="1">ns</mat-radio-button>
+    </mat-radio-group>
+    <app-slider [disabled]="stream" [(value)]="produceTime" min="0" max="1000" increment="10">Time to produce
+    </app-slider>
+    <app-slider [disabled]="stream" [(value)]="consumeTime" min="0" max="1000" increment="10">Time to consume
+    </app-slider>
+    <app-slider [disabled]="stream" [(value)]="sleepTime" min="0" max="1000" increment="10">Sleep time
+    </app-slider>
+    <app-slider tooltip="Use this option to add a random amount of time between zero and this value to other durations."
+        [disabled]="stream" [(value)]="variation" min="0" max="1000" increment="10">
+        Random variation
+    </app-slider>
+</div>

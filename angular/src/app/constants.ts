@@ -1,0 +1,12 @@
+export const nanosecond = 1;
+export const microsecond = nanosecond * 1000;
+export const millisecond = microsecond * 1000;
+export const second = millisecond * 1000;
+export const dp = 'dp';
+export const readwrite = 'readwrite';
+export const boundedbuffer = 'boundedbuffer';
+export const modus = 'modus';
+export const unisex = 'unisex';
+export const appTitle = 'Concurrency Simulations';
+export const bufferHeight = 50;
+export const bufferWidth = 500;
