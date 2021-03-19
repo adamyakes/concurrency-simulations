@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UnisexPastRunsComponent } from './unisex-past-runs.component';
 
@@ -6,7 +6,7 @@ describe('UnisexPastRunsComponent', () => {
   let component: UnisexPastRunsComponent;
   let fixture: ComponentFixture<UnisexPastRunsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UnisexPastRunsComponent ]
     })

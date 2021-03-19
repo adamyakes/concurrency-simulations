@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BoundedBufferComponent } from './bounded-buffer.component';
 
@@ -6,7 +6,7 @@ describe('BoundedBufferComponent', () => {
   let component: BoundedBufferComponent;
   let fixture: ComponentFixture<BoundedBufferComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ BoundedBufferComponent ]
     })

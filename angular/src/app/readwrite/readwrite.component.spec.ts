@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ReadwriteComponent } from './readwrite.component';
 
@@ -6,7 +6,7 @@ describe('ReadwriteComponent', () => {
   let component: ReadwriteComponent;
   let fixture: ComponentFixture<ReadwriteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ReadwriteComponent ]
     })
