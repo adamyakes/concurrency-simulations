@@ -24,7 +24,7 @@
     "@svgdotjs/svg.js": "^3.0.16",
     "google-protobuf": "^3.14.0",
     "grpc-web": "^1.2.1",
-    "rxjs": "~6.6.3",
+    "rxjs": "~6.6.6",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
